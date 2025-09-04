@@ -19,7 +19,7 @@ test:
 # Comandi per inizializzare il progetto
 
 # Specifica il nome dell’ambiente virtuale
-VENV = venv
+VENV = htru2
 
 # Carica il progetto da github
 clone:
