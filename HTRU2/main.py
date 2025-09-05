@@ -15,13 +15,11 @@ if __name__ == "__main__":
     dataset = load_dataset()
     dataset_info(dataset)
     
-    print("Bilanciamento del dataset...")   
+    print("Preprocessing del dataset...") 
     x,y=balance_with_smote(dataset, random_state=42)
     print("\nDistribuzione dopo SMOTE:")
     print(y.value_counts())
 
-
-    print("Preprocessing del dataset...")
     
     
     
