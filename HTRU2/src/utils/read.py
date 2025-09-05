@@ -8,6 +8,7 @@ import os
 # Cartelle disponibili: raw, interim, processed
 def load_dataset():
     path= os.path.join(os.path.dirname(__file__), '../../data/raw/HTRU_2.csv')
+    
     names=[ "Profile_mean", "Profile_std", 
             "Profile_skewness", "Profile_kurtosis",
             "DM_mean", "DM_std", "DM_skewness", 

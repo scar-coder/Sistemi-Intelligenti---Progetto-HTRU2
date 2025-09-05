@@ -15,5 +15,9 @@ if __name__ == "__main__":
     dataset = load_dataset()
     dataset_info(dataset)
     
+    print("Bilanciamento del dataset...")
+    
     print("Preprocessing del dataset...")
+    
+    
     
