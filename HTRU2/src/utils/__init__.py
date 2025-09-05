@@ -3,4 +3,4 @@
 # Python non riconoscerebbe la cartella come parte del progetto 
 # e non permetterebbe di importarne i moduli.
 
-from .preprocessing import *
+from .read_dataset import *

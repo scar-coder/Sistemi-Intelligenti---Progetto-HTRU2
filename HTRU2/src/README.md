@@ -36,7 +36,7 @@ Esempio di workflow:
 
 # Lista moduli:
 
-1. models/ - 
-2. utils/ - 
+1. models/ - Contiele i modelli utilizzati per il training e il testing
+2. utils/ - Contiene funzioni di utilità per il preprocessing, l'addestramento e il testing
 
 ---

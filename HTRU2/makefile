@@ -1,15 +1,19 @@
 # Comandi specifici di progetto
+# Carica il dataset
+load_dataset:
+	python src/utils/1_read_dataset.py
+
 # Prepara i dati
 prepare_data:
-	python src/model/preprocess.py
+	python src/utils/2_preprocessing.py
 
 # Addestra il modello
 train:
-	python src/model/train.py --epochs 10 --batch_size 32
+	python src/utils/3_train.py
 
 # Esegue i test
 test:
-	pytest src/tests/
+	pytest src/utils/4_test.py
 
 
 #---
@@ -19,7 +23,7 @@ test:
 # Comandi per inizializzare il progetto
 
 # Specifica il nome dell’ambiente virtuale
-VENV = htru2
+VENV = venv_htru2
 
 # Carica il progetto da github
 clone:
