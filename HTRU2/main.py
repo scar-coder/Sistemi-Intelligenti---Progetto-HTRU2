@@ -10,15 +10,62 @@ from src.utils.test import *
 
 
 if __name__ == "__main__":
-    print ("Caricamento detaset...")
+    print ("1. Fase di caricamento detaset...")
     
-    dataset = load_dataset()
-    dataset_info(dataset)
+    dataset_grezzo = load_dataset()
+    dataset_info(dataset_grezzo)
     
-    print("Preprocessing del dataset...") 
-    balanced_dataset = balance_with_smote(dataset, random_state=42)
+    print("2. Fase di preprocessing del dataset...")
+    
+    print("\n\n---\n2.1 Normalizzazione delle features...")  
+    dataset_normalizzato = normalizza_features(dataset_grezzo)
+    dataset_info(dataset_normalizzato)
+    
+    print("\n\n---\n2.2 Bilanciamento del dataset...")  
+    balanced_dataset = bilancia_dataset(dataset_normalizzato, random_state=42)
     print("\nDistribuzione dopo SMOTE:")
     print(balanced_dataset["Class"].value_counts())
+    dataset_info(balanced_dataset)
+    
+    
+    print("\n\n---\n2.3 Feature Selection per il classificatore KNN...")
+    
+    
+    print("\n\n---\n3 Fase di addestramento del modello...")  
+    
+    
+    print("\n\n---\n3.1 Divisione dei dati...")  
+    
+    print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
+    
+    
+    
+    print("\n\n---\n3.2 Ricerca iperparametri Grid Search...")  
+    
+    print("\n\n---\n3.2.1 Grid Search...")  
+    
+    
+    
+    print("\n\n---\n3.3 Training dei modelli di classificazione...")  
+    
+    
+    print("\n\n---\n3.3.1 Training classificatore KNN...")  
+    
+    print("\n\n---\n3.3.2 Training Decision Tree...")  
+    
+    print("\n\n---\n3.3.3 Training Random Forest...")  
+    
+    
+    
+    print("\n\n---\n4 Test del modello...")
+    
+    print("\n\n---\n4.1 Training classificatore KNN...")  
+    
+    print("\n\n---\n4.2 Training Decision Tree...")  
+    
+    print("\n\n---\n4.3 Training Random Forest...")  
+    
+    
 
     
     

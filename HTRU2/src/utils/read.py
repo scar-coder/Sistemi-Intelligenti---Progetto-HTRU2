@@ -26,8 +26,6 @@ def dataset_info(dataset):
     print(dataset.head())
     print("\n---\n Dataset summary:")
     print(dataset.info())
-    print("\n---\n Statistical summary:")
-    print(dataset.describe())
 
 
 # esempi di utilizzo
