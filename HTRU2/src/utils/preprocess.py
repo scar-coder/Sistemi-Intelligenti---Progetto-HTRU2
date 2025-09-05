@@ -1,4 +1,5 @@
 from imblearn.over_sampling import SMOTE
+import pandas as pd
 
 def balance_with_smote(dataset, random_state=42):
 

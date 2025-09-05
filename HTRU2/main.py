@@ -17,7 +17,8 @@ if __name__ == "__main__":
     
     print("Preprocessing del dataset...") 
     balanced_dataset = balance_with_smote(dataset, random_state=42)
-    print(f"\nDistribuzione dopo SMOTE: {balanced_dataset['Class'].value_counts()}")
+    print("\nDistribuzione dopo SMOTE:")
+    print(balanced_dataset["Class"].value_counts())
 
     
     
