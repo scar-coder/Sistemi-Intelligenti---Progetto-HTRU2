@@ -8,4 +8,7 @@ def balance_with_smote(dataset, random_state=42):
     smote = SMOTE(random_state=random_state)
     X_res, y_res = smote.fit_resample(X, y)
 
-    return X_res, y_res
+    dataset_res = pd.DataFrame(X_res, columns=X.columns)
+    dataset_res["Class"] = y_res
+    
+    return dataset_res
