@@ -15,8 +15,9 @@ if __name__ == "__main__":
     dataset = load_dataset()
     dataset_info(dataset)
     
-    print("Bilanciamento del dataset...")
-    
+    print("Bilanciamento del dataset...")   
+    x,y=balance_with_smote(dataset, random_state=42)
+
     print("Preprocessing del dataset...")
     
     
