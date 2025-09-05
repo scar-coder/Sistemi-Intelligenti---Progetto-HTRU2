@@ -74,7 +74,7 @@ Queste misure permettono di distinguere i dati in:
    ```bash
     pip install -r requirements.txt
    ```
-5. Solo a fine lavoro: esegui da terminale `deactivate` per uscire dall'ambiente virtuale.
+5. Solo a fine lavoro:  esegui da terminale `deactivate` per uscire dall'ambiente virtuale.
 
 
 
