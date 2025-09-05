@@ -5,11 +5,16 @@ import os
 
 
 # Carica il dataset usando pandas
+# Cartelle disponibili: raw, interim, processed
 def load_dataset():
-    dataset_path = os.path.join(os.path.dirname(__file__), '../../data/raw/HTRU_2.csv')
-    df = pd.read_csv(dataset_path, header=None, names=["Profile_mean", "Profile_std", "Profile_skewness", "Profile_kurtosis",
-                                                  "DM_mean", "DM_std", "DM_skewness", "DM_kurtosis", "Class"])
+    path= os.path.join(os.path.dirname(__file__), '../../data/raw/HTRU_2.csv')
+    names=[ "Profile_mean", "Profile_std", 
+            "Profile_skewness", "Profile_kurtosis",
+            "DM_mean", "DM_std", "DM_skewness", 
+            "DM_kurtosis", "Class"]
+    df = pd.read_csv(path, header=None, names=names)
     return df
+
 
 # Mostra informazioni sul dataset
 def dataset_info(dataset):
@@ -25,5 +30,5 @@ def dataset_info(dataset):
 
 
 # esempi di utilizzo
-#df = load_dataset(dataset_path)
+#df = load_dataset()
 #dataset_info(df)

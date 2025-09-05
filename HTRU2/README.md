@@ -63,8 +63,8 @@ Queste misure permettono di distinguere i dati in:
    ```
 2. navigare nella cartella del progetto
    ```bash
-    cd HTRU2
-    ```
+   cd HTRU2
+   ```
 3. creare e attivare un ambiente virtuale (opzionale ma consigliato)
    ```bash
     python -m venv env_htru2
@@ -80,12 +80,12 @@ Queste misure permettono di distinguere i dati in:
 
 # Come usare il progetto 
 
-esegui gli script in questa sequenza:
-
-src/utils/1_read.py
-src/utils/2_preprocessing.py
-src/utils/3_train.py
-src/utils/4_test.py
+1. Aprire il prompt dei comandi
+2. Navigare nella cartella del progetto col comando `cd HTRU2`
+3. Attivare l'ambiente virtuale (se creato e non è già attivo)
+   - Su Windows: `env_htru2\Scripts\activate`
+   - Su Linux: `source env_htru2/bin/activate`
+4. Eseguire il file main.py col comando `python main.py`
 
 ---
 
