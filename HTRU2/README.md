@@ -67,7 +67,7 @@ Queste misure permettono di distinguere i dati in:
    ```
 3. creare e attivare un ambiente virtuale (opzionale ma consigliato)
    ```bash
-    python -m venv env_htru2
+    python -m venv htru2
     venv/bin/activate  # Su Linux usa `source venv\Scripts\activate`
    ```
 4. installare le dipendenze
@@ -83,8 +83,8 @@ Queste misure permettono di distinguere i dati in:
 1. Aprire il prompt dei comandi
 2. Navigare nella cartella del progetto col comando `cd HTRU2`
 3. Attivare l'ambiente virtuale (se creato e non è già attivo)
-   - Su Windows: `env_htru2\Scripts\activate`
-   - Su Linux: `source env_htru2/bin/activate`
+   - Su Windows: `htru2\Scripts\activate`
+   - Su Linux: `source htru2/bin/activate`
 4. Eseguire il file main.py col comando `python main.py`
 
 ---
