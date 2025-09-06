@@ -29,12 +29,14 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n2.3 Feature Selection per il classificatore KNN...")
-    
+    selected_features_dataset = seleziona_feature_knn(balanced_dataset, n_features_to_select=5)
+    dataset_info(selected_features_dataset)
     
     print("\n\n---\n3 Fase di addestramento del modello...")  
     
     
     print("\n\n---\n3.1 Divisione dei dati...")  
+    
     
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
     

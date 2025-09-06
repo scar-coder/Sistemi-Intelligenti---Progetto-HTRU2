@@ -1,6 +1,8 @@
 from imblearn.over_sampling import SMOTE
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import RFE
 
 
 def dividi_feature_target(dataset):
@@ -42,3 +44,22 @@ def normalizza_features(dataset):
     print("Dataset normalizzato salvato in 'data/interim/normalized_HTRU_2.csv'")
     
     return dataset_normalizzato
+
+def seleziona_feature_knn(dataset, n_features_to_select=5):
+    features, target = dividi_feature_target(dataset)
+    
+    # Usiamo RandomForest come base estimator per RFE
+    rf = RandomForestClassifier(random_state=42, n_jobs=-1)
+    rfe = RFE(rf, n_features_to_select=n_features_to_select)
+    rfe.fit(features, target)
+    
+    selected_features = features.columns[rfe.support_]
+    print(f"Feature selezionate per KNN (con RFE su Random Forest): {list(selected_features)}")
+    
+    features_selezionate = features[selected_features]
+    dataset_selezionato = unisci_feature_target(features_selezionate, target)
+    
+    dataset_selezionato.to_csv('data/interim/selected_features_HTRU_2.csv', index=False)
+    print("Dataset con feature selezionate salvato in 'data/interim/selected_features_HTRU_2.csv'")
+    
+    return dataset_selezionato
