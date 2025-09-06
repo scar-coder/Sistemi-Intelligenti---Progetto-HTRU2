@@ -3,6 +3,10 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
 
 
 def dividi_feature_target(dataset):
@@ -64,12 +68,6 @@ def seleziona_feature_knn(dataset, n_features_to_select=5):
     
     return dataset_selezionato
 
-
-from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-
 # 3.1 Divisione dei dati (Hold-Out)
 def dividi_train_test(dataset, test_size=0.3, random_state=1234):
     features, target = dividi_feature_target(dataset)
@@ -77,7 +75,7 @@ def dividi_train_test(dataset, test_size=0.3, random_state=1234):
     return features_train, features_test, target_train, target_test
 
 
-# 3.2 Funzione generica di grid search con Stratified K-Fold
+# 3.2 Funzione generica di grid search con Stratified K-Fold e ricerca iperparametri
 def grid_search(model, param_grid, X, y, folds=5):
     skf = StratifiedKFold(n_splits=folds, shuffle=True, random_state=1234)
     grid = GridSearchCV(model, param_grid, cv=skf, scoring='accuracy', n_jobs=-1)
