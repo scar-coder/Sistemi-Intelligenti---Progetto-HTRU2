@@ -63,3 +63,52 @@ def seleziona_feature_knn(dataset, n_features_to_select=5):
     print("Dataset con feature selezionate salvato in 'data/interim/selected_features_HTRU_2.csv'")
     
     return dataset_selezionato
+
+
+from sklearn.model_selection import train_test_split, StratifiedKFold, GridSearchCV
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+# 3.1 Divisione dei dati (Hold-Out)
+def dividi_train_test(dataset, test_size=0.3, random_state=1234):
+    features, target = dividi_feature_target(dataset)
+    features_train, features_test, target_train, target_test = train_test_split(features, target, test_size=test_size, stratify=target, random_state=random_state)
+    return features_train, features_test, target_train, target_test
+
+
+# 3.2 Funzione generica di grid search con Stratified K-Fold
+def grid_search(model, param_grid, X, y, folds=5):
+    skf = StratifiedKFold(n_splits=folds, shuffle=True, random_state=1234)
+    grid = GridSearchCV(model, param_grid, cv=skf, scoring='accuracy', n_jobs=-1)
+    grid.fit(X, y)
+    print(f"\nMiglior set di iperparametri: {grid.best_params_}")
+    print(f"Miglior accuracy in CV: {grid.best_score_:.4f}")
+    return grid.best_estimator_
+
+
+# 3.3 Training specifico per ogni modello
+def train_knn(X_train, y_train):
+    param_grid = {
+        "n_neighbors": [3, 5, 7, 9, 11],
+        "weights": ["uniform", "distance"],
+        "metric": ["euclidean", "manhattan"]
+    }
+    return grid_search(KNeighborsClassifier(), param_grid, X_train, y_train)
+
+
+def train_decision_tree(X_train, y_train):
+    param_grid = {
+        "max_depth": [5, 10, 15, None],
+        "criterion": ["gini", "entropy"]
+    }
+    return grid_search(DecisionTreeClassifier(random_state=42), param_grid, X_train, y_train)
+
+
+def train_random_forest(X_train, y_train):
+    param_grid = {
+        "n_estimators": [50, 100, 200],
+        "max_depth": [5, 10, None],
+        "criterion": ["gini", "entropy"]
+    }
+    return grid_search(RandomForestClassifier(random_state=42, n_jobs=-1), param_grid, X_train, y_train)

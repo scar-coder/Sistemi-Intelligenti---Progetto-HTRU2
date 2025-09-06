@@ -35,9 +35,19 @@ if __name__ == "__main__":
     print("\n\n---\n3 Fase di addestramento del modello...")  
     
     
-    print("\n\n---\n3.1 Divisione dei dati...")  
+    print("\n\n---\n3.1 Divisione dei dati con Hold-Out...")  
+    features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset)
     
-    
+    print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation + Grid Search...")
+
+    print("\n\n---\n3.3.1 Training classificatore KNN...")
+    knn_model = train_knn(features_train, target_train)
+
+    print("\n\n---\n3.3.2 Training Decision Tree...")
+    dt_model = train_decision_tree(features_train, target_train)
+
+    print("\n\n---\n3.3.3 Training Random Forest...")
+    rf_model = train_random_forest(features_train, target_train)
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
     
     
