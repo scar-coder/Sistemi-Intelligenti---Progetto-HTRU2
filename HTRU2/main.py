@@ -2,6 +2,9 @@
 # un programma Python. È lo script che viene eseguito 
 # per avviare l’applicazione o eseguire una funzionalità specifica
 
+import multiprocessing
+multiprocessing.freeze_support()  # evita errori multiprocess su Windows
+
 from src.models import KNN, Decision_Tree, Random_Forest
 from src.utils.read import *
 from src.utils.preprocess import *
@@ -31,13 +34,12 @@ if __name__ == "__main__":
     print(balanced_dataset["Class"].value_counts())
     dataset_info(balanced_dataset)
     
-    
     print("\n\n---\n2.3 Feature Selection per il classificatore KNN...")
     selected_features_dataset = seleziona_features(balanced_dataset, n_features_to_select=5)
     dataset_info(selected_features_dataset)
     
-    print("\n\n---\n3 Fase di addestramento del modello...")  
     
+    print("\n\n---\n3 Fase di addestramento del modello...")  
     
     print("\n\n---\n3.1 Divisione dei dati con Hold-Out...")  
     #features_train, features_test, target_train, target_test = dividi_train_test(dataset_grezzo)
@@ -46,8 +48,7 @@ if __name__ == "__main__":
     features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset)
     
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=random_state)
-    
+
     for fold, (train_index, val_index) in enumerate(skf.split(features_train, target_train)):
         print(f"\nFold {fold + 1}")
         X_train_fold, X_val_fold = features_train.iloc[train_index], features_train.iloc[val_index]
