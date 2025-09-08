@@ -22,22 +22,51 @@ def train_with_stratified_kfold(model, features, target, n_splits=5):
     e stampa le accuracy ottenute nei vari fold.
     """
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-
+    
     accuracies = []
+    precisions = []
+    recalls = []
+    f1s = []
+    aucs = []
+    
     fold = 1
     for train_idx, val_idx in skf.split(features, target):
-        X_train, X_val = features.iloc[train_idx], features.iloc[val_idx]
-        y_train, y_val = target.iloc[train_idx], target.iloc[val_idx]
+        features_train, features_val = features.iloc[train_idx], features.iloc[val_idx]
+        target_train, target_val = target.iloc[train_idx], target.iloc[val_idx]
         
-        model.fit(X_train, y_train)
-        preds = model.predict(X_val)
+        model.fit(features_train, target_train)
+        preds = model.predict(features_val)
         
-        acc = accuracy_score(y_val, preds)
+        proba = model.predict_proba(features_val)[:, 1]
+        acc = accuracy_score(target_val, preds)
+        prec = precision_score(target_val, preds, zero_division=0)
+        rec = recall_score(target_val, preds, zero_division=0)
+        f1 = f1_score(target_val, preds, zero_division=0)
+        auc_val = roc_auc_score(target_val, proba)
+
+        # append alle liste
         accuracies.append(acc)
+        precisions.append(prec)
+        recalls.append(rec)
+        f1s.append(f1)
+        aucs.append(auc_val)
+
+        # stampa per ogni fold
         print(f"Fold {fold}: Accuracy = {acc:.4f}")
-        fold += 1
+        print(f"Fold {fold}: Precision = {prec:.4f}")
+        print(f"Fold {fold}: Recall = {rec:.4f}")
+        print(f"Fold {fold}: F1 = {f1:.4f}")
+        print(f"Fold {fold}: AUC = {auc_val:.4f}\n\n---\n")
         
+        fold += 1
+
+    # calcola e stampa le medie (uso sum/len come richiesto)
     print(f"\nAccuracy media sui {n_splits} fold: {sum(accuracies)/len(accuracies):.4f}")
+    print(f"Precision media sui {n_splits} fold: {sum(precisions)/len(precisions):.4f}")
+    print(f"Recall media sui {n_splits} fold: {sum(recalls)/len(recalls):.4f}")
+    print(f"F1 media sui {n_splits} fold: {sum(f1s)/len(f1s):.4f}")
+    print(f"AUC media sui {n_splits} fold: {sum(aucs)/len(aucs):.4f}")
+    
     return model
 
 if __name__ == "__main__":
@@ -46,7 +75,6 @@ if __name__ == "__main__":
     print(f"Assegnazione seed per riproducibilità:{random_state}")
     
     print ("1. Fase di caricamento detaset...")
-    
     dataset_grezzo = load_dataset()
     dataset_info(dataset_grezzo)
     
@@ -62,21 +90,23 @@ if __name__ == "__main__":
     print(balanced_dataset["Class"].value_counts())
     dataset_info(balanced_dataset)
     
-    print("\n\n---\n2.3 Feature Selection per il classificatore KNN...")
-    selected_features_dataset = seleziona_features(balanced_dataset, n_features_to_select=5)
+    print("\n\n---\n2.3 Feature Selection: RFE (Recursive Feature Elimination)...")
+    n_features_to_select = 8
+    selected_features_dataset = seleziona_features(balanced_dataset, n_features_to_select=n_features_to_select)
     dataset_info(selected_features_dataset)
     
     
     print("\n\n---\n3 Fase di addestramento del modello...")  
     
     print("\n\n---\n3.1 Divisione dei dati con Hold-Out...")  
-    #features_train, features_test, target_train, target_test = dividi_train_test(dataset_grezzo)
-    #features_train, features_test, target_train, target_test = dividi_train_test(dataset_normalizzato)
-    #features_train, features_test, target_train, target_test = dividi_train_test(balanced_dataset)
-    features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset)
+    test_size = 0.2
+    #features_train, features_test, target_train, target_test = dividi_train_test(dataset_grezzo, test_size)
+    #features_train, features_test, target_train, target_test = dividi_train_test(dataset_normalizzato, test_size)
+    #features_train, features_test, target_train, target_test = dividi_train_test(balanced_dataset, test_size)
+    features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset, test_size)
     
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
-    
+    n_splits = 4
     print("\n\n---\n3.2 Ricerca iperparametri...")  
     
     print("\n\n---\n3.2.1 Grid Search...")  
