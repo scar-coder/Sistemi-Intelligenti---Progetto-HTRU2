@@ -91,7 +91,7 @@ if __name__ == "__main__":
     dataset_info(balanced_dataset)
     
     print("\n\n---\n2.3 Feature Selection: RFE (Recursive Feature Elimination)...")
-    n_features_to_select = 8
+    n_features_to_select = 5
     selected_features_dataset = seleziona_features(balanced_dataset, n_features_to_select=n_features_to_select)
     dataset_info(selected_features_dataset)
     
