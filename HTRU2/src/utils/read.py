@@ -1,9 +1,6 @@
 import pandas as pd
 import os
 
-# Percorso del file dataset
-
-
 # Carica il dataset usando pandas
 # Cartelle disponibili: raw, interim, processed
 def load_dataset():
