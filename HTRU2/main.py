@@ -106,7 +106,14 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n4 Test del modello...")
-    
+    print("\n--- Test KNN ---")
+    results_knn = test_model(best_knn_model, features_test, target_test, model_name="KNN")
+
+    print("\n--- Test Decision Tree ---")
+    results_dt = test_model(best_dt_model, features_test, target_test, model_name="Decision Tree")
+
+    print("\n--- Test Random Forest ---")
+    results_rf = test_model(best_rf_model, features_test, target_test, model_name="Random Forest")
     print("\n\n---\n4.1 Training classificatore KNN...")  
     
     print("\n\n---\n4.2 Training Decision Tree...")  
