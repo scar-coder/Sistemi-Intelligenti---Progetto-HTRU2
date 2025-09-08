@@ -12,6 +12,34 @@ from src.utils.train import *
 from src.utils.test import *
 
 
+    
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import accuracy_score
+
+def train_with_stratified_kfold(model, features, target, n_splits=5):
+    """
+    Addestra un modello usando Stratified K-Fold Cross Validation
+    e stampa le accuracy ottenute nei vari fold.
+    """
+    skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
+
+    accuracies = []
+    fold = 1
+    for train_idx, val_idx in skf.split(features, target):
+        X_train, X_val = features.iloc[train_idx], features.iloc[val_idx]
+        y_train, y_val = target.iloc[train_idx], target.iloc[val_idx]
+        
+        model.fit(X_train, y_train)
+        preds = model.predict(X_val)
+        
+        acc = accuracy_score(y_val, preds)
+        accuracies.append(acc)
+        print(f"Fold {fold}: Accuracy = {acc:.4f}")
+        fold += 1
+        
+    print(f"\nAccuracy media sui {n_splits} fold: {sum(accuracies)/len(accuracies):.4f}")
+    return model
+
 if __name__ == "__main__":
     
     set_random_state(969902)
@@ -60,6 +88,14 @@ if __name__ == "__main__":
     
     print("\n\n---\n3.3 Training dei modelli di classificazione...")  
     
+    print("\n--- Training KNN con Stratified K-Fold ---")
+    train_with_stratified_kfold(best_knn_model, features_train, target_train)
+
+    print("\n--- Training Decision Tree con Stratified K-Fold ---")
+    train_with_stratified_kfold(best_dt_model, features_train, target_train)
+
+    print("\n--- Training Random Forest con Stratified K-Fold ---")
+    train_with_stratified_kfold(best_rf_model, features_train, target_train)
     
     print("\n\n---\n3.3.1 Training classificatore KNN...")  
     
@@ -79,6 +115,4 @@ if __name__ == "__main__":
     
     
 
-    
-    
     

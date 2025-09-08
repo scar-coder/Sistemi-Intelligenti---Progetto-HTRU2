@@ -116,7 +116,7 @@ def gs_decision_tree(features_train, y_train):
 
 def gs_random_forest(features_train, y_train):
     param_grid = {
-        "n_estimators": [50, 100, 200, 300],
+        "n_estimators": [50, 100, 200],
         "max_depth": [5, 10, None],
         "criterion": ["gini", "entropy"]
     }
