@@ -85,6 +85,7 @@ def dividi_train_test(dataset, test_size=0.3):
 
 # 3.2 Grid search
 def grid_search(model, param_grid, features, target):
+    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=random_state)
     grid = GridSearchCV(model, param_grid, cv=skf, scoring='accuracy', n_jobs=-1)
     grid.fit(features, target)
     print(f"\nMiglior set di iperparametri: {grid.best_params_}")
