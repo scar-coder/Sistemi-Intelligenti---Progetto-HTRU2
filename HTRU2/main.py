@@ -48,15 +48,6 @@ if __name__ == "__main__":
     features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset)
     
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
-
-    for fold, (train_index, val_index) in enumerate(skf.split(features_train, target_train)):
-        print(f"\nFold {fold + 1}")
-        X_train_fold, X_val_fold = features_train.iloc[train_index], features_train.iloc[val_index]
-        y_train_fold, y_val_fold = target_train.iloc[train_index], target_train.iloc[val_index]
-        print(f"Training set size: {X_train_fold.shape[0]} samples")
-        print(f"Validation set size: {X_val_fold.shape[0]} samples")
-        print(f"Class distribution in training set:\n{y_train_fold.value_counts()}")
-        print(f"Class distribution in validation set:\n{y_val_fold.value_counts()}")
     
     print("\n\n---\n3.2 Ricerca iperparametri...")  
     
