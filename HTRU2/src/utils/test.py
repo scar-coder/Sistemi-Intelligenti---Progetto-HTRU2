@@ -10,6 +10,18 @@ from sklearn.metrics import (
     RocCurveDisplay
 )
 
+import matplotlib.pyplot as plt
+from sklearn.metrics import (
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+    roc_auc_score,
+    confusion_matrix,
+    ConfusionMatrixDisplay,
+    RocCurveDisplay
+)
+
 def test_model(model, features_test, target_test, model_name="Modello"):
     """
     Testa un modello sul dataset di test e stampa/plottare metriche principali:
@@ -32,16 +44,23 @@ def test_model(model, features_test, target_test, model_name="Modello"):
     print(f"F1-score : {f1:.4f}")
     print(f"AUC-ROC  : {auc:.4f}")
 
-    # Confusion Matrix
+    # Confusion Matrix con colormap viola
     cm = confusion_matrix(target_test, target_pred)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    disp.plot(cmap="Blues")
-    plt.title(f"Confusion Matrix - {model_name}")
+    disp.plot(cmap="Purples")
+    plt.title(f"Confusion Matrix - {model_name}", color="purple")
     plt.show()
+    plt.close()
 
-    # ROC Curve
-    RocCurveDisplay.from_predictions(target_test, target_proba)
-    plt.title(f"ROC Curve - {model_name}")
+    # ROC Curve con linea viola
+    RocCurveDisplay.from_predictions(
+        target_test,
+        target_proba,
+        name=model_name,
+        color="purple"
+    )
+    plt.title(f"ROC Curve - {model_name}", color="purple")
     plt.show()
+    plt.close()
 
     return {"accuracy": acc, "precision": prec, "recall": rec, "f1": f1, "auc": auc}

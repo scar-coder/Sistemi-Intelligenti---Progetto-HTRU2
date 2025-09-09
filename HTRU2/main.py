@@ -50,13 +50,6 @@ def train_with_stratified_kfold(model, features, target, n_splits=5):
         recalls.append(rec)
         f1s.append(f1)
         aucs.append(auc_val)
-
-        # stampa per ogni fold
-        print(f"Fold {fold}: Accuracy = {acc:.4f}")
-        print(f"Fold {fold}: Precision = {prec:.4f}")
-        print(f"Fold {fold}: Recall = {rec:.4f}")
-        print(f"Fold {fold}: F1 = {f1:.4f}")
-        print(f"Fold {fold}: AUC = {auc_val:.4f}\n\n---\n")
         
         fold += 1
 
@@ -91,7 +84,7 @@ if __name__ == "__main__":
     dataset_info(balanced_dataset)
     
     print("\n\n---\n2.3 Feature Selection: RFE (Recursive Feature Elimination)...")
-    n_features_to_select = 5
+    n_features_to_select = 8
     selected_features_dataset = seleziona_features(balanced_dataset, n_features_to_select=n_features_to_select)
     dataset_info(selected_features_dataset)
     
@@ -106,7 +99,7 @@ if __name__ == "__main__":
     features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset, test_size)
     
     print("\n\n---\n3.1.1 Stratified K-Fold Cross-Validation...")  
-    n_splits = 4
+    n_splits = 6
     print("\n\n---\n3.2 Ricerca iperparametri...")  
     
     print("\n\n---\n3.2.1 Grid Search...")  

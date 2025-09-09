@@ -55,7 +55,7 @@ def normalizza_features(dataset):
     
     return dataset_normalizzato
 
-def seleziona_features(dataset, n_features_to_select=5):
+def seleziona_features(dataset, n_features_to_select=8):
     features, target = dividi_feature_target(dataset)
     
     # Usiamo RandomForest come base estimator per RFE
