@@ -1,4 +1,3 @@
-from imblearn.over_sampling import SMOTE
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -11,7 +10,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 global random_state
 random_state=1234
-def set_random_state(seed=1234):
+
+def set_random_state(seed=random_state):
     global random_state
     random_state = seed
 
@@ -20,26 +20,13 @@ def dividi_feature_target(dataset):
     target = dataset["Class"]
     return features, target
 
-
 def unisci_feature_target(features, target):
     dataset_unito = pd.DataFrame(features, columns=features.columns)
     dataset_unito["Class"] = target
     return dataset_unito
 
 
-def bilancia_dataset(dataset):
-
-    features, target = dividi_feature_target(dataset)
-
-    smote = SMOTE(random_state=random_state)
-    features_res, target_res = smote.fit_resample(features, target)
-    
-    dataset_bilanciato = unisci_feature_target(features_res, target_res)
-    
-    dataset_bilanciato.to_csv('data/interim/balanced_HTRU_2.csv', index=False)
-    print("Dataset bilanciato salvato in 'data/interim/balanced_HTRU_2.csv'")
-    
-    return dataset_bilanciato
+# 2 Feature engineering
 
 def normalizza_features(dataset):
     features, target = dividi_feature_target(dataset)
@@ -76,50 +63,6 @@ def seleziona_features(dataset, n_features_to_select=8):
 
 
 
-# 3.1 Divisione dei dati (Hold-Out)
-def dividi_train_test(dataset, test_size=0.3):
-    features, target = dividi_feature_target(dataset)
-    features_train, features_test, target_train, target_test = train_test_split(features, target, test_size=test_size, stratify=target, random_state=random_state)
-    return features_train, features_test, target_train, target_test
-
+# Training
 
 # 3.2 Grid search
-def grid_search(model, param_grid, features, target):
-    skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=random_state)
-    grid = GridSearchCV(model, param_grid, cv=skf, scoring='recall', n_jobs=-1)
-    grid.fit(features, target)
-    print(f"\nMiglior set di iperparametri: {grid.best_params_}")
-    print(f"Miglior recall in CV: {grid.best_score_:.4f}")
-    return grid.best_estimator_
-
-
-# 3.3 Iperparametri modello
-def gs_knn(features_train, y_train):
-    param_grid = {
-        "n_neighbors": [1,2,3,4, 5, 7, 9, 11,15],
-        "weights": ["uniform", "distance"],
-        "metric": ["euclidean", "manhattan"]
-    }
-    knn = KNeighborsClassifier(n_jobs=-1)
-    best_model = grid_search(knn, param_grid, features_train, y_train)
-    return best_model
-
-
-def gs_decision_tree(features_train, y_train):
-    param_grid = {
-        "max_depth": [5, 10, 15, None],
-        "criterion": ["gini", "entropy"]
-    }
-    dt = DecisionTreeClassifier(random_state=random_state)
-    best_model = grid_search(dt, param_grid, features_train, y_train)
-    return best_model
-
-def gs_random_forest(features_train, y_train):
-    param_grid = {
-        "n_estimators": [50, 100, 200],
-        "max_depth": [5, 10, None],
-        "criterion": ["gini", "entropy"]
-    }
-    rf = RandomForestClassifier(random_state=random_state, n_jobs=-1)
-    best_model = grid_search(rf, param_grid, features_train, y_train)
-    return best_model
