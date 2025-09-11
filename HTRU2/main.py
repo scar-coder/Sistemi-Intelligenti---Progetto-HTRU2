@@ -80,7 +80,7 @@ if __name__ == "__main__":
     target_pred, target_proba = test_model(trained_rf_model, features_test)
     metriche_rf_test = calcola_metriche(target_test, target_pred, target_proba)
     display_metriche(metriche_rf_test, target_test, target_pred, model_name="Random Forest")
-    plot_random_forest(trained_rf_model, features_train.columns, max_depth=3, n_trees=3)
+    plot_random_forest(trained_rf_model, features_train.columns, max_depth=3)
     
     
 
@@ -122,7 +122,7 @@ if __name__ == "__main__":
         "Random Forest": metriche_rf_train
     }
     plot_comparazione(metriche_modelli_train)
-
+ 
     
     print("\n\n---\n5 Confronto metriche di test tra i modelli...")
     metriche_modelli_test = {
