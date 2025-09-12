@@ -55,7 +55,9 @@ if __name__ == "__main__":
     test_size = 0.025
     features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset, test_size)
     print("\nDistribuzione dopo Hold-Out:")
+    print("Training set:")
     print(target_train.value_counts())
+    print("\nTest set:")
     print(target_test.value_counts())
     
     print("\n\n---\n3.1 Stratified K-Fold Cross-Validation sul training set...")  
@@ -112,7 +114,7 @@ if __name__ == "__main__":
     target_pred, target_proba = test_model(trained_knn_model, features_test)
     metriche_knn_test = calcola_metriche(target_test, target_pred, target_proba)
     display_metriche(metriche_knn_test, target_test, target_pred, model_name="KNN")
-    plot_knn_decision_boundary(trained_knn_model, features_test, target_test, feature_names=features_test.columns[:2])
+    #plot_knn_decision_boundary(trained_knn_model, features_test, target_test, feature_names=features_test.columns)
     
     
     
