@@ -41,7 +41,7 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n2.3 Feature Selection: RFE (Recursive Feature Elimination)...")
-    n_features_to_select = 2
+    n_features_to_select = 8
     selected_features_dataset = seleziona_features(dataset_normalizzato, n_features_to_select=n_features_to_select)
     dataset_info(selected_features_dataset)
     
@@ -52,14 +52,14 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n3.1 Divisione in training set e test set con Hold-Out...")  
-    test_size = 0.3
+    test_size = 0.025
     features_train, features_test, target_train, target_test = dividi_train_test(selected_features_dataset, test_size)
     print("\nDistribuzione dopo Hold-Out:")
     print(target_train.value_counts())
     print(target_test.value_counts())
     
     print("\n\n---\n3.1 Stratified K-Fold Cross-Validation sul training set...")  
-    n_splits = 5
+    n_splits = 10
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
     
     
@@ -71,8 +71,8 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n3.3 Ricerca iperparametri Random Forest (Grid Search)...")  
-    #best_rf_model = gs_random_forest(features_train, target_train, skf)
-    best_rf_model = RandomForestClassifier(n_estimators=20, max_depth=10, random_state=1234) #gs_random_forest(features_train, target_train, skf)
+    best_rf_model = gs_random_forest(features_train, target_train, skf)
+    #best_rf_model = RandomForestClassifier(n_estimators=20, max_depth=10, random_state=1234)
     
     print("\n\n---\n3.4 Training Random Forest (Stratified K-Fold)...")
     trained_rf_model, metriche_rf_train = train_model(best_rf_model, features_train, target_train, skf)
@@ -87,8 +87,8 @@ if __name__ == "__main__":
 
     
     print("\n\n---\n3.3 Ricerca iperparametri Decision Tree (Grid Search)...")  
-    #best_dt_model = gs_decision_tree(features_train, target_train, skf)
-    best_dt_model = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=1234) #gs_decision_tree(features_train, target_train, skf)
+    best_dt_model = gs_decision_tree(features_train, target_train, skf)
+    #best_dt_model = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=1234)
     print("\n\n---\n3.4 Training Decision Tree (Stratified K-Fold)...")
     trained_dt_model, metriche_dt_train = train_model(best_dt_model, features_train, target_train, skf)
     
@@ -102,8 +102,8 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n3.3 Ricerca iperparametri KNN (Grid Search)...")  
-    #best_knn_model = gs_knn(features_train, target_train, skf)
-    best_knn_model = KNeighborsClassifier(n_neighbors=5, weights='uniform', metric='minkowski') #gs_knn(features_train, target_train, skf)
+    best_knn_model = gs_knn(features_train, target_train, skf)
+    #best_knn_model = KNeighborsClassifier(n_neighbors=5, weights='uniform', metric='minkowski')
     
     print("\n\n---\n3.4 Training KNN (Stratified K-Fold)...")
     trained_knn_model, metriche_knn_train = train_model(best_knn_model, features_train, target_train, skf)
@@ -112,7 +112,6 @@ if __name__ == "__main__":
     target_pred, target_proba = test_model(trained_knn_model, features_test)
     metriche_knn_test = calcola_metriche(target_test, target_pred, target_proba)
     display_metriche(metriche_knn_test, target_test, target_pred, model_name="KNN")
-    plot_decision_boundary(features_test, target_test, trained_knn_model, title="KNN Decision Boundary (test set)")
     plot_knn_decision_boundary(trained_knn_model, features_test, target_test, feature_names=features_test.columns[:2])
     
     
