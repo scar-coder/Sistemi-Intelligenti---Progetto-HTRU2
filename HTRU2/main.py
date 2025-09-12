@@ -87,8 +87,8 @@ if __name__ == "__main__":
 
     
     print("\n\n---\n3.3 Ricerca iperparametri Decision Tree (Grid Search)...")  
-    best_dt_model = gs_decision_tree(features_train, target_train, skf)
-    
+    #best_dt_model = gs_decision_tree(features_train, target_train, skf)
+    best_dt_model = DecisionTreeClassifier(criterion='gini', max_depth=5, random_state=1234) #gs_decision_tree(features_train, target_train, skf)
     print("\n\n---\n3.4 Training Decision Tree (Stratified K-Fold)...")
     trained_dt_model, metriche_dt_train = train_model(best_dt_model, features_train, target_train, skf)
     
@@ -102,7 +102,8 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n3.3 Ricerca iperparametri KNN (Grid Search)...")  
-    best_knn_model = gs_knn(features_train, target_train, skf)
+    #best_knn_model = gs_knn(features_train, target_train, skf)
+    best_knn_model = KNeighborsClassifier(n_neighbors=5, weights='uniform', metric='minkowski') #gs_knn(features_train, target_train, skf)
     
     print("\n\n---\n3.4 Training KNN (Stratified K-Fold)...")
     trained_knn_model, metriche_knn_train = train_model(best_knn_model, features_train, target_train, skf)
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     target_pred, target_proba = test_model(trained_knn_model, features_test)
     metriche_knn_test = calcola_metriche(target_test, target_pred, target_proba)
     display_metriche(metriche_knn_test, target_test, target_pred, model_name="KNN")
-    plot_decision_boundary(features_test.values, target_test.values, trained_knn_model, title="KNN Decision Boundary (test set)")
+    plot_decision_boundary(features_test, target_test, trained_knn_model, title="KNN Decision Boundary (test set)")
     plot_knn_decision_boundary(trained_knn_model, features_test, target_test, feature_names=features_test.columns[:2])
     
     
