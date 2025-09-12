@@ -138,41 +138,6 @@ def plot_random_forest(rf_model, feature_names, max_depth=3):
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
 
-def plot_decision_boundary(X, y, model, title):
-    """
-    Funzione per visualizzare il confine di decisione di un classificatore.
-    X: le feature (2 colonne)
-    y: il target
-    model: il modello addestrato
-    title: il titolo del grafico
-    """
-    # Passo della mesh
-    h = .02
-    cmap_light = ListedColormap(['#FFAAAA', '#AAFFAA'])
-    cmap_bold = ListedColormap(['#FF0000', '#00FF00'])
-
-    # Crea un reticolo (mesh) per il grafico
-    x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-    y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
-    xx, yy = np.meshgrid(np.arange(x_min, x_max, h),
-                         np.arange(y_min, y_max, h))
-    
-    # Previsione su ogni punto del reticolo
-    Z = model.predict(np.c_[xx.ravel(), yy.ravel()])
-    Z = Z.reshape(xx.shape)
-    
-    # Plot del reticolo e dei punti di training
-    plt.figure(figsize=(10, 7))
-    plt.pcolormesh(xx, yy, Z, cmap=cmap_light, shading='auto')
-    
-    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=cmap_bold, edgecolor='k', s=20)
-    plt.xlim(xx.min(), xx.max())
-    plt.ylim(yy.min(), yy.max())
-    plt.title(title)
-    plt.xlabel('Profile_std')
-    plt.ylabel('Profile_kurtosis')
-    plt.show()
-
 def plot_knn_decision_boundary(model, X, y, feature_names):
     X = X.iloc[:, :2].values  # prime due feature
     h = .02  
