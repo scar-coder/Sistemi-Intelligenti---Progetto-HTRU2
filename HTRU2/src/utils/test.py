@@ -154,5 +154,5 @@ def plot_knn_decision_boundary(model, X, y, feature_names):
     plt.scatter(X[:, 0], X[:, 1], c=y, edgecolor='k')
     plt.xlabel(feature_names[0])
     plt.ylabel(feature_names[1])
-    plt.title("Decision Boundary KNN")
+    plt.title("Decision Boundary KNN", font_size = 13)
     plt.show()
