@@ -38,6 +38,8 @@ def calcola_metriche(target_test, target_pred, target_proba):
         "recall": rec,
         "f1": f1,
         "auc_roc": auc_roc,
+        "fpr_roc":fpr,
+        "tpr_roc":tpr,
         "fpr": fpr_val,
         "fnr": fnr_val
     }
@@ -52,6 +54,8 @@ def display_metriche(metriche, target_test, target_pred, model_name="Modello"):
     auc_roc = metriche["auc_roc"]
     fpr = metriche["fpr"]
     fnr = metriche["fnr"]
+    fpr_roc = metriche["fpr_roc"]
+    tpr_roc = metriche["tpr_roc"]
     
     print(f"\n---\nRisultati {model_name}:")
     print(f"Accuracy : {acc:.4f}")
@@ -63,9 +67,9 @@ def display_metriche(metriche, target_test, target_pred, model_name="Modello"):
     print(f"FNR      : {fnr:.4f}")
 
     # Plot ROC curve
-    plt.plot(fpr, fnr, color='purple', lw=2,
+    plt.plot(fpr_roc, tpr_roc, color='purple', lw=2,
             label='ROC curve (area = %0.2f)' % auc_roc)
-    plt.plot([0, 1], [0, 1], color='purple', lw=2, linestyle='--')
+    plt.plot(["Non Pulsar", "Pulsar"], ["Non Pulsar", "Pulsar"], color='purple', lw=2, linestyle='--')
     plt.title(f"ROC Curve - {model_name}", color="purple")
     plt.legend(loc="lower right")
     plt.show()
@@ -77,7 +81,7 @@ def display_metriche(metriche, target_test, target_pred, model_name="Modello"):
     plt.title(f"Confusion Matrix - {model_name}", color="purple")
     plt.show()
     plt.close()
-    
+
 
 def plot_comparazione(results_dict):
     metrics = ["accuracy", "precision", "recall", "f1", "auc_roc", "fpr", "fnr"]
@@ -101,7 +105,7 @@ def plot_comparazione(results_dict):
     ax.set_title("Confronto delle metriche sui modelli")
     ax.legend()
     plt.show()
-    
+
 
 def plot_decision_tree(dt_model, feature_names, max_depth=3):
     plt.figure(figsize=(30,40))
@@ -124,11 +128,11 @@ def plot_random_forest(rf_model, feature_names, max_depth=3):
               class_names=["Non Pulsar", "Pulsar"],
               filled=True, 
               rounded=True,
-              fontsize=7,
+              fontsize=6,
               max_depth=max_depth,
               impurity=True)
     plt.title(f"Esempio di un albero (profondità max {max_depth}) dalla Random Forest", fontsize=13)
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
 
 

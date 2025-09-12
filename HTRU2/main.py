@@ -71,7 +71,8 @@ if __name__ == "__main__":
     
     
     print("\n\n---\n3.3 Ricerca iperparametri Random Forest (Grid Search)...")  
-    best_rf_model = gs_random_forest(features_train, target_train, skf)
+    #best_rf_model = gs_random_forest(features_train, target_train, skf)
+    best_rf_model = RandomForestClassifier(n_estimators=20, max_depth=10, random_state=1234) #gs_random_forest(features_train, target_train, skf)
     
     print("\n\n---\n3.4 Training Random Forest (Stratified K-Fold)...")
     trained_rf_model, metriche_rf_train = train_model(best_rf_model, features_train, target_train, skf)

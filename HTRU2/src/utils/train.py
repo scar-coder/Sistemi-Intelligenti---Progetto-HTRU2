@@ -75,7 +75,7 @@ def gs_random_forest(features_train, y_train, skf):
 
 def train_model(model, features, target, skf=StratifiedKFold(n_splits=10, shuffle=True, random_state=1234)):
     
-    accuracies, precisions, recalls, f1s, aucs, fprs, fnrs, =[], [], [], [], [], [], []
+    accuracies, precisions, recalls, f1s, aucs, fprs, fnrs, fpr_rocs, tpr_rocs =[], [], [], [], [], [], [], [], []
     
     for fold, (train_idx, val_idx) in enumerate(skf.split(features, target), start=1):
         X_train, X_val = features.iloc[train_idx], features.iloc[val_idx]
@@ -104,6 +104,8 @@ def train_model(model, features, target, skf=StratifiedKFold(n_splits=10, shuffl
         recalls.append(rec)
         f1s.append(f1)
         aucs.append(auc_roc)
+        fpr_rocs.append(fpr)
+        tpr_rocs.append(tpr)
         fprs.append(fpr_val)
         fnrs.append(fnr_val)
 
@@ -114,6 +116,8 @@ def train_model(model, features, target, skf=StratifiedKFold(n_splits=10, shuffl
             , "auc_roc": sum(aucs)/len(aucs)
             , "fpr": sum(fprs)/len(fprs)
             , "fnr": sum(fnrs)/len(fnrs)
+            , "fpr_roc":fpr
+            , "tpr_roc":tpr
             }
         
     print(f"\n📊 Risultati medi su {skf.get_n_splits()} fold:")
