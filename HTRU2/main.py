@@ -124,7 +124,7 @@ if __name__ == "__main__":
         "Decision Tree": metriche_dt_train,
         "Random Forest": metriche_rf_train
     }
-    plot_comparazione(metriche_modelli_train)
+    plot_comparazione(metriche_modelli_train, title="Confronto delle metriche sui modelli (Training Set)")
  
     
     print("\n\n---\n5 Confronto metriche di test tra i modelli...")
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         "Random Forest": metriche_rf_test
     }
     
-    plot_comparazione(metriche_modelli_test)
+    plot_comparazione(metriche_modelli_test, title="Confronto delle metriche sui modelli (Test Set)")
     
     
 

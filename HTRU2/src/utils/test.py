@@ -85,7 +85,7 @@ def display_metriche(metriche, target_test, target_pred, model_name="Modello"):
     plt.close()
 
 
-def plot_comparazione(results_dict):
+def plot_comparazione(results_dict, title="Confronto delle metriche sui modelli"):
     metrics = ["accuracy", "precision", "recall", "f1", "auc_roc", "fpr", "fnr"]
     models = list(results_dict.keys())
 
@@ -104,7 +104,7 @@ def plot_comparazione(results_dict):
     ax.set_xticklabels([m.capitalize() for m in metrics])
     ax.set_ylim(0,1.1)
     ax.set_ylabel("Score")
-    ax.set_title("Confronto delle metriche sui modelli")
+    ax.set_title(title, color="purple")
     ax.legend()
     plt.show()
 
@@ -119,7 +119,7 @@ def plot_decision_tree(dt_model, feature_names, max_depth=3):
               fontsize=6,
               max_depth=max_depth,
               impurity=True)
-    plt.title("Esempio di albero Decision Tree sul dataset HTRU2 (tagliato a profondità 3).\nOgni nodo rappresenta una regola basata su una feature, con le foglie che indicano la classe predetta (Pulsar o Non Pulsar).", fontsize=13)
+    plt.title("Esempio di albero Decision Tree sul dataset HTRU2 (tagliato a profondità 3).\nOgni nodo rappresenta una regola basata su una feature, con le foglie che indicano la classe predetta (Pulsar o Non Pulsar).", fontsize=13, color="purple")
     plt.show() 
 
 def plot_random_forest(rf_model, feature_names, max_depth=3):
@@ -133,7 +133,7 @@ def plot_random_forest(rf_model, feature_names, max_depth=3):
               fontsize=6,
               max_depth=max_depth,
               impurity=True)
-    plt.title(f"Esempio di un albero (profondità max {max_depth}) dalla Random Forest", fontsize=13)
+    plt.title(f"Esempio di un albero (profondità max {max_depth}) dalla Random Forest", fontsize=13, color="purple")
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
@@ -154,5 +154,5 @@ def plot_knn_decision_boundary(model, X, y, feature_names):
     plt.scatter(X[:, 0], X[:, 1], c=y, edgecolor='k')
     plt.xlabel(feature_names[0])
     plt.ylabel(feature_names[1])
-    plt.title("Decision Boundary KNN", font_size = 13)
+    plt.title("Decision Boundary KNN", font_size = 13, color="purple")
     plt.show()
