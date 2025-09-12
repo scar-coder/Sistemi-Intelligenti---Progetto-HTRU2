@@ -65,12 +65,14 @@ def display_metriche(metriche, target_test, target_pred, model_name="Modello"):
     print(f"AUC-ROC  : {auc_roc:.4f}")
     print(f"FPR      : {fpr:.4f}")
     print(f"FNR      : {fnr:.4f}")
-
+    
     # Plot ROC curve
     plt.plot(fpr_roc, tpr_roc, color='purple', lw=2,
             label='ROC curve (area = %0.2f)' % auc_roc)
     plt.plot(["Non Pulsar", "Pulsar"], ["Non Pulsar", "Pulsar"], color='purple', lw=2, linestyle='--')
     plt.title(f"ROC Curve - {model_name}", color="purple")
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
     plt.legend(loc="lower right")
     plt.show()
     
@@ -108,13 +110,13 @@ def plot_comparazione(results_dict):
 
 
 def plot_decision_tree(dt_model, feature_names, max_depth=3):
-    plt.figure(figsize=(30,40))
+    plt.figure(figsize=(50,40))
     plot_tree(dt_model,
               feature_names=feature_names,
               class_names=["Non Pulsar", "Pulsar"],
               filled=True, 
               rounded=True,
-              fontsize=7,
+              fontsize=6,
               max_depth=max_depth,
               impurity=True)
     plt.title("Esempio di albero Decision Tree sul dataset HTRU2 (tagliato a profondità 3).\nOgni nodo rappresenta una regola basata su una feature, con le foglie che indicano la classe predetta (Pulsar o Non Pulsar).", fontsize=13)
@@ -133,9 +135,8 @@ def plot_random_forest(rf_model, feature_names, max_depth=3):
               impurity=True)
     plt.title(f"Esempio di un albero (profondità max {max_depth}) dalla Random Forest", fontsize=13)
     plt.tight_layout(rect=[0, 0, 1, 0.95])
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.show()
-
-
 
 def plot_decision_boundary(X, y, model, title):
     """
